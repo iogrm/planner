@@ -1,0 +1,62 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Place {
+  id: String!
+  title: String!
+  country: String!
+}
+
+type User {
+  id: Float!
+  nationalId: String!
+  username: String!
+  password: String!
+  email: String!
+}
+
+"""NumberString custom scalar type"""
+scalar MyNumberString
+
+type Query {
+  users: [User!]!
+  user(id: Int!): User!
+  places: [Place!]!
+  place(id: String!): Place!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+  createPlace(createPlaceInput: CreatePlaceInput!): Place!
+  updatePlace(updatePlaceInput: UpdatePlaceInput!): Place!
+  removePlace(id: String!): Boolean!
+}
+
+input CreateUserInput {
+  username: String!
+  password: String!
+  email: String!
+  nationalId: String!
+}
+
+input UpdateUserInput {
+  username: String!
+  password: String!
+  email: String!
+  nationalId: String!
+  id: Int!
+}
+
+input CreatePlaceInput {
+  title: String!
+  country: String!
+}
+
+input UpdatePlaceInput {
+  title: String!
+  country: String!
+  id: String!
+}
