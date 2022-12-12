@@ -33,6 +33,7 @@ export class PlaceService {
     });
     place.title = updatePlaceInput.title;
     place.country = updatePlaceInput.country;
+    return place;
   }
 
   remove(id: string) {

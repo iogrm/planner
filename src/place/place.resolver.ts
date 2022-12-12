@@ -1,31 +1,31 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreatePlaceInput } from './dto/create-place.input';
 import { UpdatePlaceInput } from './dto/update-place.input';
-import { Place } from './dto/place.output';
+import { PlaceOutput } from './dto/place.output';
 import { PlaceService } from './place.service';
 
-@Resolver(() => Place)
+@Resolver(() => PlaceOutput)
 export class PlaceResolver {
   constructor(private readonly placeService: PlaceService) {}
 
-  @Mutation(() => Place)
+  @Mutation(() => PlaceOutput)
   async createPlace(
     @Args('createPlaceInput') createPlaceInput: CreatePlaceInput,
-  ): Promise<Place> {
+  ): Promise<PlaceOutput> {
     return await this.placeService.create(createPlaceInput);
   }
 
-  @Query(() => [Place], { name: 'places' })
+  @Query(() => [PlaceOutput], { name: 'places' })
   findAll() {
     return this.placeService.findAll();
   }
 
-  @Query(() => Place, { name: 'place' })
+  @Query(() => PlaceOutput, { name: 'place' })
   findOne(@Args('id') id: string) {
     return this.placeService.findOne(id);
   }
 
-  @Mutation(() => Place)
+  @Mutation(() => PlaceOutput)
   updatePlace(@Args('updatePlaceInput') updatePlaceInput: UpdatePlaceInput) {
     return this.placeService.update(updatePlaceInput);
   }

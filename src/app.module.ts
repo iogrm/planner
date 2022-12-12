@@ -10,6 +10,7 @@ import { PlaceModule } from './place/place.module';
 import { NumberStringScalar } from './scalar/national_id.scalar';
 import { UserModule } from './user/user.module';
 import { TypeOrmConfigService } from './shared/typeorm/typeorm.service';
+import { QuestionModule } from './question/question.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { TypeOrmConfigService } from './shared/typeorm/typeorm.service';
     }),
     UserModule,
     PlaceModule,
+    QuestionModule,
   ],
   controllers: [AppController],
   providers: [AppService, NumberStringScalar],

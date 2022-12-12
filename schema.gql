@@ -2,7 +2,7 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Place {
+type PlaceOutput {
   id: String!
   title: String!
   country: String!
@@ -16,23 +16,35 @@ type User {
   email: String!
 }
 
+type QuestionOutput {
+  id: Int!
+  text: String!
+  traitPlus: String!
+  traitMinus: String!
+}
+
 """NumberString custom scalar type"""
 scalar MyNumberString
 
 type Query {
   users: [User!]!
   user(id: Int!): User!
-  places: [Place!]!
-  place(id: String!): Place!
+  places: [PlaceOutput!]!
+  place(id: String!): PlaceOutput!
+  questions: [QuestionOutput!]!
+  question(id: Int!): QuestionOutput!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
-  createPlace(createPlaceInput: CreatePlaceInput!): Place!
-  updatePlace(updatePlaceInput: UpdatePlaceInput!): Place!
+  createPlace(createPlaceInput: CreatePlaceInput!): PlaceOutput!
+  updatePlace(updatePlaceInput: UpdatePlaceInput!): PlaceOutput!
   removePlace(id: String!): Boolean!
+  createQuestion(createQuestionInput: CreateQuestionInput!): QuestionOutput!
+  updateQuestion(updateQuestionInput: UpdateQuestionInput!): QuestionOutput!
+  removeQuestion(id: Int!): QuestionOutput!
 }
 
 input CreateUserInput {
@@ -59,6 +71,19 @@ input UpdatePlaceInput {
   title: String!
   country: String!
   id: String!
+}
+
+input CreateQuestionInput {
+  text: String!
+  traitPlus: String!
+  traitMinus: String!
+}
+
+input UpdateQuestionInput {
+  text: String!
+  traitPlus: String!
+  traitMinus: String!
+  id: Int!
 }
 
 type Subscription {
