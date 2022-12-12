@@ -1,5 +1,6 @@
 import { CreateQuestionInput } from './create-question.input';
 import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { Trait } from 'src/type/trait_string';
 
 @InputType()
 export class UpdateQuestionInput extends PartialType(CreateQuestionInput) {
@@ -9,9 +10,9 @@ export class UpdateQuestionInput extends PartialType(CreateQuestionInput) {
   @Field(() => String)
   text: string;
 
-  @Field(() => String)
-  traitPlus: traits;
+  @Field(() => Trait)
+  traitPlus: Trait;
 
-  @Field(() => String)
-  traitMinus: traits;
+  @Field(() => Trait)
+  traitMinus: Trait;
 }

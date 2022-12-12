@@ -26,6 +26,9 @@ type QuestionOutput {
 """NumberString custom scalar type"""
 scalar MyNumberString
 
+"""Trait custom scalar type"""
+scalar Trait
+
 type Query {
   users: [User!]!
   user(id: Int!): User!
@@ -75,14 +78,14 @@ input UpdatePlaceInput {
 
 input CreateQuestionInput {
   text: String!
-  traitPlus: String!
-  traitMinus: String!
+  traitPlus: Trait!
+  traitMinus: Trait!
 }
 
 input UpdateQuestionInput {
   text: String!
-  traitPlus: String!
-  traitMinus: String!
+  traitPlus: Trait!
+  traitMinus: Trait!
   id: Int!
 }
 

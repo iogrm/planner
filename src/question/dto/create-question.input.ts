@@ -1,13 +1,15 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
+import { TraitScalar } from 'src/scalar/trait.scalar';
+import { Trait } from 'src/type/trait_string';
 
 @InputType()
 export class CreateQuestionInput {
   @Field(() => String)
   text: string;
 
-  @Field(() => String)
-  traitPlus: traits;
+  @Field(() => Trait)
+  traitPlus: Trait;
 
-  @Field(() => String)
-  traitMinus: traits;
+  @Field(() => Trait)
+  traitMinus: Trait;
 }

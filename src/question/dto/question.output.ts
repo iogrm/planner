@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Trait } from 'src/type/trait_string';
 
 @ObjectType()
 export class QuestionOutput {
@@ -9,8 +10,8 @@ export class QuestionOutput {
   text: string;
 
   @Field(() => String)
-  traitPlus: traits;
+  traitPlus: Trait;
 
   @Field(() => String)
-  traitMinus: traits;
+  traitMinus: Trait;
 }
