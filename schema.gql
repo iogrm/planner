@@ -60,3 +60,7 @@ input UpdatePlaceInput {
   country: String!
   id: String!
 }
+
+type Subscription {
+  userAdded: User!
+}

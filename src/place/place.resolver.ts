@@ -1,18 +1,18 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { PlaceService } from './place.service';
-import { Place } from './entities/place.entity';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreatePlaceInput } from './dto/create-place.input';
 import { UpdatePlaceInput } from './dto/update-place.input';
+import { Place } from './dto/place.output';
+import { PlaceService } from './place.service';
 
 @Resolver(() => Place)
 export class PlaceResolver {
   constructor(private readonly placeService: PlaceService) {}
 
   @Mutation(() => Place)
-  createPlace(
+  async createPlace(
     @Args('createPlaceInput') createPlaceInput: CreatePlaceInput,
-  ): Place {
-    return this.placeService.create(createPlaceInput);
+  ): Promise<Place> {
+    return await this.placeService.create(createPlaceInput);
   }
 
   @Query(() => [Place], { name: 'places' })
@@ -27,7 +27,7 @@ export class PlaceResolver {
 
   @Mutation(() => Place)
   updatePlace(@Args('updatePlaceInput') updatePlaceInput: UpdatePlaceInput) {
-    return this.placeService.update(updatePlaceInput.id, updatePlaceInput);
+    return this.placeService.update(updatePlaceInput);
   }
 
   @Mutation(() => Boolean)

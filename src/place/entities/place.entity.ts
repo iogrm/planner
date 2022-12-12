@@ -1,13 +1,13 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
-@ObjectType()
+@Entity()
 export class Place {
-  @Field(() => String)
+  @PrimaryColumn({ nullable: false, type: String })
   id: string;
 
-  @Field(() => String)
+  @Column({ type: String, nullable: false })
   title: string;
 
-  @Field(() => String)
+  @Column({ type: String, nullable: false })
   country: string;
 }

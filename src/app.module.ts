@@ -1,36 +1,24 @@
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PlaceModule } from './place/place.module';
-import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { UserModule } from './user/user.module';
-import GraphQLJSON from 'graphql-type-json';
 import { NumberStringScalar } from './scalar/national_id.scalar';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
-import { DataSource } from 'typeorm';
+import { UserModule } from './user/user.module';
+import { TypeOrmConfigService } from './shared/typeorm/typeorm.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'fred',
-      database: 'test',
-      entities: [User],
-      synchronize: true,
-    }),
+    TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       autoSchemaFile: 'schema.gql',
       driver: ApolloDriver,
-      subscriptions: {
-        'graphql-ws': true,
-      },
+      installSubscriptionHandlers: true,
     }),
     UserModule,
     PlaceModule,

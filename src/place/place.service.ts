@@ -1,40 +1,41 @@
-import { PlaceTable, places } from './data/data';
-import { Place } from './entities/place.entity';
 import { Injectable } from '@nestjs/common';
 import { CreatePlaceInput } from './dto/create-place.input';
 import { UpdatePlaceInput } from './dto/update-place.input';
 import { v1 as uuid } from 'uuid';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm/repository/Repository';
+import { Place } from './entities/place.entity';
 
 @Injectable()
 export class PlaceService {
-  create(createPlaceInput: CreatePlaceInput): Place {
-    const newPlace = new Place();
-    newPlace.id = uuid();
-    newPlace.title = createPlaceInput.title;
-    newPlace.country = createPlaceInput.country;
-    places.push(newPlace);
-    return newPlace;
+  constructor(
+    @InjectRepository(Place)
+    private readonly placeRepository: Repository<Place>,
+  ) {}
+
+  create(createPlaceInput: CreatePlaceInput) {
+    const place: Place = { ...createPlaceInput, id: uuid() };
+    const newPlace = this.placeRepository.create(place);
+    return this.placeRepository.save(newPlace);
   }
 
-  findAll(): Place[] {
-    return places;
+  findAll(): Promise<Place[]> {
+    return this.placeRepository.find();
   }
 
-  findOne(id: String): Place {
-    const place = places.find((place) => place.id === id);
-    return place;
+  findOne(id: string): Promise<Place> {
+    return this.placeRepository.findOneBy({ id });
   }
 
-  update(id: string, updatePlaceInput: UpdatePlaceInput) {
-    const place = places.find((place) => place.id === id);
+  async update(updatePlaceInput: UpdatePlaceInput) {
+    const place = await this.placeRepository.findOneBy({
+      id: updatePlaceInput.id,
+    });
     place.title = updatePlaceInput.title;
     place.country = updatePlaceInput.country;
-    places.push(place);
-    return place;
   }
 
-  remove(id: string): Boolean {
-    PlaceTable.deletePlace(id);
-    return true;
+  remove(id: string) {
+    return this.placeRepository.delete(id);
   }
 }
