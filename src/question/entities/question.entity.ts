@@ -1,5 +1,6 @@
+import { Answer } from './../../answer/entities/answer.entity';
 import { Trait } from 'src/type/trait_string';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Question {
@@ -14,4 +15,7 @@ export class Question {
 
   @Column({ type: String, default: 'e' })
   traitMinus: Trait;
+
+  @OneToMany(() => Answer, (a) => a.question)
+  answers: Answer[];
 }

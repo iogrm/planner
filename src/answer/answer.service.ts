@@ -1,3 +1,4 @@
+import { Question } from 'src/question/entities/question.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { allScalars } from 'src/scalar';
@@ -13,7 +14,13 @@ export class AnswerService {
     private readonly answerRepository: Repository<Answer>,
   ) {}
   create(createAnswerInput: CreateAnswerInput) {
-    const answer = this.answerRepository.create(createAnswerInput);
+    const q = new Question();
+    q.id = createAnswerInput.questionId;
+    const a = new Answer();
+    a.percentage = createAnswerInput.percentage;
+    a.question = q;
+    a.userId = createAnswerInput.userId;
+    const answer = this.answerRepository.create(a);
     return this.answerRepository.save(answer);
   }
 
