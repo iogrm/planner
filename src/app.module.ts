@@ -12,6 +12,8 @@ import { TypeOrmConfigService } from './shared/typeorm/typeorm.service';
 import { QuestionModule } from './question/question.module';
 import { NumberStringScalar } from './scalar/national_id.scalar';
 import { TraitScalar } from './scalar/trait.scalar';
+import { AnswerModule } from './answer/answer.module';
+import { allScalars } from './scalar';
 
 @Module({
   imports: [
@@ -25,9 +27,10 @@ import { TraitScalar } from './scalar/trait.scalar';
     UserModule,
     PlaceModule,
     QuestionModule,
+    AnswerModule,
   ],
   controllers: [AppController],
-  providers: [AppService, NumberStringScalar, TraitScalar],
+  providers: [AppService, ...allScalars],
 })
 export class AppModule {
   constructor(private dataSource: DataSource) {}

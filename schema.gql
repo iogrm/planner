@@ -23,6 +23,14 @@ type QuestionOutput {
   traitMinus: String!
 }
 
+type AnswerOutput {
+  id: Int!
+  question: QuestionOutput!
+  questionId: Int!
+  userId: Int!
+  percentage: Int!
+}
+
 """NumberString custom scalar type"""
 scalar MyNumberString
 
@@ -36,6 +44,8 @@ type Query {
   place(id: String!): PlaceOutput!
   questions: [QuestionOutput!]!
   question(id: Int!): QuestionOutput!
+  answers: [AnswerOutput!]!
+  answer(id: Int!): [AnswerOutput!]!
 }
 
 type Mutation {
@@ -46,8 +56,12 @@ type Mutation {
   updatePlace(updatePlaceInput: UpdatePlaceInput!): PlaceOutput!
   removePlace(id: String!): Boolean!
   createQuestion(createQuestionInput: CreateQuestionInput!): QuestionOutput!
+  createQuestions(createQuestionsInput: [CreateQuestionInput!]!): [QuestionOutput!]!
   updateQuestion(updateQuestionInput: UpdateQuestionInput!): QuestionOutput!
   removeQuestion(id: Int!): QuestionOutput!
+  createAnswer(createAnswerInput: CreateAnswerInput!): AnswerOutput!
+  updateAnswer(updateAnswerInput: UpdateAnswerInput!): AnswerOutput!
+  removeAnswer(id: Int!): AnswerOutput!
 }
 
 input CreateUserInput {
@@ -86,6 +100,19 @@ input UpdateQuestionInput {
   text: String!
   traitPlus: Trait!
   traitMinus: Trait!
+  id: Int!
+}
+
+input CreateAnswerInput {
+  questionId: Int!
+  userId: Int!
+  percentage: Int!
+}
+
+input UpdateAnswerInput {
+  questionId: Int!
+  userId: Int!
+  percentage: Int!
   id: Int!
 }
 

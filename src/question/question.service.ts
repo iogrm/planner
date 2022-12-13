@@ -12,8 +12,13 @@ export class QuestionService {
     private readonly questionRepository: Repository<Question>,
   ) {}
   create(createQuestionInput: CreateQuestionInput) {
-    this.questionRepository.create(createQuestionInput);
-    return this.questionRepository.save(createQuestionInput);
+    const question = this.questionRepository.create(createQuestionInput);
+    return this.questionRepository.save(question);
+  }
+
+  createSome(createQuestionInput: [CreateQuestionInput]) {
+    const questions = this.questionRepository.create(createQuestionInput);
+    return this.questionRepository.save(questions);
   }
 
   findAll() {

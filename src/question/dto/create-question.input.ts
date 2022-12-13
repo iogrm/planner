@@ -1,5 +1,4 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
-import { TraitScalar } from 'src/scalar/trait.scalar';
+import { Field, InputType } from '@nestjs/graphql';
 import { Trait } from 'src/type/trait_string';
 
 @InputType()
