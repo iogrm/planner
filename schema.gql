@@ -8,27 +8,29 @@ type PlaceOutput {
   country: String!
 }
 
-type User {
+type UserOutput {
   id: Float!
   nationalId: String!
   username: String!
   password: String!
   email: String!
+  mbti: String
 }
 
 type QuestionOutput {
   id: Int!
   text: String!
-  traitPlus: String!
-  traitMinus: String!
+  traitPlus: Trait!
+  traitMinus: Trait!
 }
 
 type AnswerOutput {
   id: Int!
   question: QuestionOutput!
-  questionId: Int!
-  userId: Int!
+  user: UserOutput!
   percentage: Int!
+  time: String!
+  mbti: String!
 }
 
 """NumberString custom scalar type"""
@@ -38,20 +40,21 @@ scalar MyNumberString
 scalar Trait
 
 type Query {
-  users: [User!]!
-  user(id: Int!): User!
+  users: [UserOutput!]!
+  user(id: Int!): UserOutput!
   places: [PlaceOutput!]!
   place(id: String!): PlaceOutput!
   questions: [QuestionOutput!]!
   question(id: Int!): QuestionOutput!
   answers: [AnswerOutput!]!
-  answer(id: Int!): [AnswerOutput!]!
+  mbti(id: Int!): String
+  answer(id: Int!): AnswerOutput!
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): User!
+  createUser(createUserInput: CreateUserInput!): UserOutput!
+  updateUser(updateUserInput: UpdateUserInput!): UserOutput!
+  removeUser(id: Int!): UserOutput!
   createPlace(createPlaceInput: CreatePlaceInput!): PlaceOutput!
   updatePlace(updatePlaceInput: UpdatePlaceInput!): PlaceOutput!
   removePlace(id: String!): Boolean!
@@ -60,7 +63,6 @@ type Mutation {
   updateQuestion(updateQuestionInput: UpdateQuestionInput!): QuestionOutput!
   removeQuestion(id: Int!): QuestionOutput!
   createAnswer(createAnswerInput: CreateAnswerInput!): AnswerOutput!
-  updateAnswer(updateAnswerInput: UpdateAnswerInput!): AnswerOutput!
   removeAnswer(id: Int!): AnswerOutput!
 }
 
@@ -77,6 +79,7 @@ input UpdateUserInput {
   email: String!
   nationalId: String!
   id: Int!
+  mbti: String!
 }
 
 input CreatePlaceInput {
@@ -109,13 +112,6 @@ input CreateAnswerInput {
   percentage: Int!
 }
 
-input UpdateAnswerInput {
-  questionId: Int!
-  userId: Int!
-  percentage: Int!
-  id: Int!
-}
-
 type Subscription {
-  userAdded: User!
+  userAdded: UserOutput!
 }

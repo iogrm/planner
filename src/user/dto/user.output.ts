@@ -2,7 +2,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { NumberString } from 'src/type/number_string';
 
 @ObjectType()
-export class User {
+export class UserOutput {
   @Field()
   id: number;
 
@@ -17,4 +17,7 @@ export class User {
 
   @Field()
   email: string;
+
+  @Field({ nullable: true })
+  mbti: string;
 }

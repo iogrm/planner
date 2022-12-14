@@ -1,6 +1,6 @@
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { UserOutput } from 'src/user/dto/user.output';
 import { QuestionOutput } from './../../question/dto/question.output';
-import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Question } from 'src/question/entities/question.entity';
 
 @ObjectType()
 export class AnswerOutput {
@@ -10,12 +10,15 @@ export class AnswerOutput {
   @Field(() => QuestionOutput)
   question: QuestionOutput;
 
-  @Field(() => Int)
-  questionId: number;
-
-  @Field(() => Int)
-  userId: number;
+  @Field(() => UserOutput)
+  user: UserOutput;
 
   @Field(() => Int)
   percentage: number;
+
+  @Field(() => String)
+  time: string;
+
+  @Field(() => String)
+  mbti: string;
 }

@@ -16,7 +16,7 @@ export class UserService {
     return this.userRepository.save(newUser);
   }
 
-  findUsersById(id: number) {
+  findUserById(id: number) {
     return this.userRepository.findOneBy({ id });
     // ({ select: { id: id.toString() } });
   }
@@ -25,13 +25,16 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  update(id: number, UpdateUserInput: UpdateUserInput) {
-    return this.userRepository.findOneBy({ id });
-    // ({ select: { id: id.toString() } });
+  async update(updateUserInput: UpdateUserInput) {
+    const user = await this.userRepository.findOneBy({
+      id: updateUserInput.id,
+    });
+    user.mbti = updateUserInput.mbti;
+    this.userRepository.save(user);
+    return user;
   }
 
   remove(id: number) {
-    return this.userRepository.findOneBy({ id });
-    // ({ select: { id: id.toString() } });
+    return this.userRepository.delete(id);
   }
 }

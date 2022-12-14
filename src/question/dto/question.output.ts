@@ -10,9 +10,9 @@ export class QuestionOutput {
   @Field(() => String)
   text: string;
 
-  @Field(() => String)
+  @Field(() => Trait)
   traitPlus: Trait;
 
-  @Field(() => String)
+  @Field(() => Trait)
   traitMinus: Trait;
 }

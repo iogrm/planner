@@ -9,45 +9,45 @@ import {
 import { PubSub } from 'graphql-subscriptions';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { User } from './dto/user.output';
+import { UserOutput } from './dto/user.output';
 import { UserService } from './user.service';
 
 const pubSub = new PubSub();
 
-@Resolver(() => User)
+@Resolver(() => UserOutput)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-  @Subscription((returns) => User, {
+  @Subscription((returns) => UserOutput, {
     name: 'userAdded',
   })
   subscribeToCommentAdded() {
     return pubSub.asyncIterator('userAdded');
   }
 
-  @Mutation(() => User)
+  @Mutation(() => UserOutput)
   createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
     const newUser = this.userService.createUser(createUserInput);
     pubSub.publish('userAdded', { userAdded: newUser });
     return newUser;
   }
 
-  @Query(() => [User], { name: 'users' })
+  @Query(() => [UserOutput], { name: 'users' })
   findAll() {
     return this.userService.findAll();
   }
 
-  @Query(() => User, { name: 'user' })
+  @Query(() => UserOutput, { name: 'user' })
   findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.userService.findUsersById(id);
+    return this.userService.findUserById(id);
   }
 
-  @Mutation(() => User)
+  @Mutation(() => UserOutput)
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-    return this.userService.update(updateUserInput.id, updateUserInput);
+    return this.userService.update(updateUserInput);
   }
 
-  @Mutation(() => User)
+  @Mutation(() => UserOutput)
   removeUser(@Args('id', { type: () => Int }) id: number) {
     return this.userService.remove(id);
   }

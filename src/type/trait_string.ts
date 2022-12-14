@@ -9,3 +9,5 @@ export namespace Trait {
   export const mk = (str: string) => (refinement(str) ? str : undefined);
   export const mkUnsafe = (str: string) => str as Trait;
 }
+
+export const mbtiTypeDefs = `enum UserRole { ${traits.join(' ')} }`;

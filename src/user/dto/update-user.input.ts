@@ -2,6 +2,7 @@ import { CreateUserInput } from './create-user.input';
 import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 import { NumberString } from 'src/type/number_string';
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { Mbti } from 'src/type/mbti_string';
 
 @InputType()
 export class UpdateUserInput extends PartialType(CreateUserInput) {
@@ -26,4 +27,8 @@ export class UpdateUserInput extends PartialType(CreateUserInput) {
   @Field(() => String)
   @IsNotEmpty()
   nationalId: NumberString;
+
+  @Field(() => String)
+  @IsNotEmpty()
+  mbti: Mbti;
 }

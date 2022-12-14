@@ -1,13 +1,6 @@
+import { User } from 'src/user/entities/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Question } from './../../question/entities/question.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
 
 @Entity()
 export class Answer {
@@ -17,12 +10,12 @@ export class Answer {
   @ManyToOne(() => Question, { nullable: false })
   question: Question;
 
-  // @Column()
-  // questionId: number;
-
-  @Column()
-  userId: number;
+  @ManyToOne(() => User, { nullable: false })
+  user: User;
 
   @Column()
   percentage: number;
+
+  @Column()
+  time: Date;
 }

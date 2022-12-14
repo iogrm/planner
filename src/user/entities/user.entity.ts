@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Answer } from 'src/answer/entities/answer.entity';
+import { Mbti } from 'src/type/mbti_string';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -32,4 +34,10 @@ export class User {
     default: '',
   })
   password: string;
+
+  @OneToMany(() => Answer, (a) => a.user)
+  answers: Answer[];
+
+  @Column({ nullable: true })
+  mbti: string;
 }

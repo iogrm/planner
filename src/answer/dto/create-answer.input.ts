@@ -1,6 +1,4 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
-import { QuestionOutput } from 'src/question/dto/question.output';
-import { Question } from 'src/question/entities/question.entity';
+import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class CreateAnswerInput {
